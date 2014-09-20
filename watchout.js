@@ -19,7 +19,6 @@ canvas.on("mousemove", function() {
 var update = function(data) {
   //Data Join
   var enemies = canvas.selectAll('.enemy').data(data);
-  console.log(enemies);
   //Update existing enemies with new coordinates
   enemies.transition().duration(1500)
     .attr('cx', function(d, i){ return d.x; })
@@ -51,10 +50,20 @@ var updatePlayer = function (arr) {
 
 var checkCollisions = function(){
   //select ememies
-  var enemies = canvas.selectAll('.enemy')
+  var enemies = d3.select('.enemy')[0];
   //select player
   var player = canvas.selectAll('.player');
   //iterate enemies, checking distance to player
+
+  var enemX, enemY, plrX, plrY;
+
+
+  var distance = Math.sqrt(Math.pow((enemX-plrX), 2) + Math.pow((enemY-plrY), 2))
+
+  if(distance < playerRadius +enemyRadius){
+    console.log('collision detected!!!');
+  }
+
 };
 
 var coordinates = function(n){
