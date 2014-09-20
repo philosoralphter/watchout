@@ -19,7 +19,7 @@ canvas.on("mousemove", function() {
 var update = function(data) {
   //Data Join
   var enemies = canvas.selectAll('.enemy').data(data);
-
+  console.log(enemies);
   //Update existing enemies with new coordinates
   enemies.transition().duration(1500)
     .attr('cx', function(d, i){ return d.x; })
@@ -29,17 +29,14 @@ var update = function(data) {
   //Enter - create new elements as needed
   enemies.enter().append('circle')
     .attr('class', 'enemy')
-    .attr('cx', function(d, i){ return d.x; })
+    .attr('cx', function(d, i){ return d.x;})
     .attr('cy', function(d, i){ return d.y;})
     .attr('r', enemyRadius+'px');
-
-  console.log(enemies);
 };
 
 var updatePlayer = function (arr) {
   //Data Join
   var player = canvas.selectAll('.player').data(arr);
-
   //Update
   player.attr('cx', function(d, i){ return d[0];})
     .attr('cy', function(d, i){ return d[1];});
@@ -50,6 +47,14 @@ var updatePlayer = function (arr) {
     .attr('cx', function(d, i){ return d[0];})
     .attr('cy', function(d, i){ return d[1];})
     .attr('r', playerRadius+'px');
+};
+
+var checkCollisions = function(){
+  //select ememies
+  var enemies = canvas.selectAll('.enemy')
+  //select player
+  var player = canvas.selectAll('.player');
+  //iterate enemies, checking distance to player
 };
 
 var coordinates = function(n){
@@ -67,3 +72,4 @@ updatePlayer([[50,50]]);
 update(coordinates(numEnemies));
 
 setInterval(function(){update(coordinates(numEnemies));}, 2000);
+setInterval(function(){checkCollisions();}, 20);
