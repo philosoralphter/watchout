@@ -2,8 +2,22 @@
 
 /* Note: an asteroid image is included in this repo.
 Feel free to use it if you like. */
-
+body{
+  background-image: url(assets/collision.jpg);
+}
 .player{
-  stroke: red;
+  stroke: white;
+  stroke-width:3px;
   fill: red;
+}
+.enemy{
+  stroke: black;
+  stroke-width:3px;
+  fill: white;
+}
+.canvas{
+  border: 1px solid black;
+  display:block;
+  margin: 0 auto;
+  background-color:rgba(255, 255, 255, 0.2);
 }

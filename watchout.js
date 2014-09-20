@@ -10,12 +10,15 @@ var highScore = 0;
 var collisionCount = 0;
 
 var canvas = d3.select('body').append('svg')
+  .attr('class', 'canvas')
   .attr('width', width)
   .attr('height', height);
 
 canvas.on("mousemove", function() {
+  var position = d3.mouse(this);
+  console.log(position);
   var mouseLocation = [];
-  mouseLocation.push(d3.mouse(this));
+  mouseLocation.push(position);
   updatePlayer(mouseLocation);
 });
 
@@ -104,5 +107,5 @@ updatePlayer([[50,50]]);
 update(coordinates(numEnemies));
 
 setInterval(function(){update(coordinates(numEnemies));}, 2000);
-setInterval(function(){checkCollisions();}, 200);
+setInterval(function(){checkCollisions();}, 60);
 setInterval(function(){scoring();}, 200);
