@@ -21,3 +21,8 @@ body{
   margin: 0 auto;
   background-color:rgba(255, 255, 255, 0.2);
 }
+div.scoreboard{
+  font-family:helvetica;
+  font-size:30px;
+  color:white;
+}
