@@ -5,6 +5,9 @@ var height = 750;
 var enemyRadius = 10;
 var playerRadius = 15;
 var numEnemies = 20;
+var currentScore =0;
+var highScore = 0;
+var collisionCount = 0;
 
 var canvas = d3.select('body').append('svg')
   .attr('width', width)
@@ -49,21 +52,41 @@ var updatePlayer = function (arr) {
 };
 
 var checkCollisions = function(){
+  var enemX, enemY, plrX, plrY, distance;
+
   //select ememies
-  var enemies = d3.select('.enemy')[0];
+  var enemies = d3.selectAll('.enemy');
   //select player
-  var player = canvas.selectAll('.player');
+  var player = canvas.select('.player');
+  plrX = player.attr('cx');
+  plrY = player.attr('cy');
+
   //iterate enemies, checking distance to player
+  //each iterates through all enemies
+  enemies.each(function(d, i){
 
-  var enemX, enemY, plrX, plrY;
+    //get this enemy's coordinates
+    enemX = d3.select(this).attr('cx'); //when using .each, must reselect each enemy
+    enemY = d3.select(this).attr('cy');
 
+    //compute distance to player
+    distance = Math.sqrt(Math.pow((enemX-plrX), 2) + Math.pow((enemY-plrY), 2))
 
-  var distance = Math.sqrt(Math.pow((enemX-plrX), 2) + Math.pow((enemY-plrY), 2))
+    //if there's a collision
+    if(distance < playerRadius + enemyRadius){
+      console.log('collision detected!!!');
+      collisionCount++;
+      currentScore = 0;
+    }
+  });
+};
 
-  if(distance < playerRadius +enemyRadius){
-    console.log('collision detected!!!');
-  }
-
+var scoring = function() {
+  currentScore++;
+  highScore = Math.max(currentScore, highScore);
+  d3.select('.high > span').text(highScore);
+  d3.select('.current > span').text(currentScore);
+  d3.select('.collisions > span').text(collisionCount);
 };
 
 var coordinates = function(n){
@@ -81,4 +104,5 @@ updatePlayer([[50,50]]);
 update(coordinates(numEnemies));
 
 setInterval(function(){update(coordinates(numEnemies));}, 2000);
-setInterval(function(){checkCollisions();}, 20);
+setInterval(function(){checkCollisions();}, 200);
+setInterval(function(){scoring();}, 200);
